@@ -159,30 +159,30 @@ def event_handle(event,json_line):
             replyObj = TextSendMessage(text="ขอบายจ้าสู")
             line_bot_api.reply_message(rtoken, replyObj)
         else :
-           headers = request.headers
-           json_headers = ({k:v for k, v in headers.items()})
-           json_headers.update({'Host':'bots.dialogflow.com'})
-           url = "https://dialogflow.cloud.google.com/v1/integrations/line/webhook/75648fc1-08b4-4bb0-9b10-f2d8b07f0122"
-           requests.post(url,data=json_line, headers=json_headers)
-        elif msgType == "image":
-        try:
-            message_content = line_bot_api.get_message_content(event['message']['id'])
-            i = Image.open(BytesIO(message_content.content))
-            filename = event['message']['id'] + '.jpg'
-            i.save(UPLOAD_FOLDER + filename)
-            process_file(os.path.join(UPLOAD_FOLDER, filename), filename)
-
-            url = request.url_root + DOWNLOAD_FOLDER + filename
-            
-            line_bot_api.reply_message(
-                rtoken, [
-                    TextSendMessage(text='Object detection result:'),
-                    ImageSendMessage(url,url)
-                ])    
+            headers = request.headers
+            json_headers = ({k:v for k, v in headers.items()})
+            json_headers.update({'Host':'bots.dialogflow.com'})
+            url = ""
+            requests.post(url,data=json_line, headers=json_headers)
+  elif msgType == "image":
+     try:
+         message_content = line_bot_api.get_message_content(event['message']['id'])
+         i = Image.open(BytesIO(message_content.content))
+         filmename = event['message']['id'] + '.jpg'
+         i.save(UPLOAD_FOLDER + filename)
+         process_file(os.path.join(UPLOAD_FOLDER, filename),filename)
     
-        except:
-            message = TextSendMessage(text="เกิดข้อผิดพลาด กรุณาส่งใหม่อีกครั้ง")
-            line_bot_api.reply_message(event.reply_token, message)
+         url = request.url_root + DOWNLOAD_FOLDER + filename
+        
+         line_bot_api.reply_message(
+             rtoken, [
+                 TextSendMessage(text='Object detection result:'),
+                 ImageSendMessage(url,url)
+             ])
+      
+    except:
+        message = TextSendMessage(text="เกิดข้อผิดพลาด กรุณาส่งใหม่อีกครั้ง")
+        line_bot_api.reply_message(event.reply_token, message)
 
             return 0
 
