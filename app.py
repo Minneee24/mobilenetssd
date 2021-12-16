@@ -178,11 +178,11 @@ def event_handle(event,json_line):
                 rtoken, [
                     TextSendMessage(text='Object detection result:'),
                     ImageSendMessage(url,url)
-             ])
+                ])
       
-    except:
-        message = TextSendMessage(text="เกิดข้อผิดพลาด กรุณาส่งใหม่อีกครั้ง")
-        line_bot_api.reply_message(event.reply_token, message)
+        except:
+            message = TextSendMessage(text="เกิดข้อผิดพลาด กรุณาส่งใหม่อีกครั้ง")
+            line_bot_api.reply_message(event.reply_token, message)
 
             return 0
 
