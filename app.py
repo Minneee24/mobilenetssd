@@ -26,7 +26,7 @@ UPLOAD_FOLDER ='static/uploads/'
 DOWNLOAD_FOLDER = 'static/downloads/'
 ALLOWED_EXTENSIONS = {'jpg', 'png','.jpeg'}
 
-lineaccesstoken = 'NeZy8HA2IZIUOGDrKantBcrEGyYtmtv0bEe/MnIZs+TycgrOwI56tiuUX8W4bZuZGed+WiCihI1mSZQJTJP3FNYPGHxRYxKzQeoQJPNLaIOV0hkkq/ThQ7AhTFPGGbUx/jXY9SMO+Eq8UcbXX2YhkgdB04t89/1O/w1cDnyilFU='
+lineaccesstoken = 'oSPwXqMEf8C+jsV/cEfC6b6/BI3Y+7af86K7IS6/w7NZlT/aF7gq6V0rZ0OkD6S5B+2CalqZyiOscLJTUYhmvKW3qYTRzpAkQZcv0UhnBKAKx0ydjNlmF8HBcwJjYGM5wS0M7kRlxoG+PqRUHO8FWgdB04t89/1O/w1cDnyilFU='
 
 line_bot_api = LineBotApi(lineaccesstoken)
 
@@ -156,7 +156,7 @@ def event_handle(event,json_line):
             replyObj = TextSendMessage(text="ไม่เอาอะ")
             line_bot_api.reply_message(rtoken,replyObj)
         elif msg == "ไปเที่ยวไหม":
-            replyObj = TextSendMessage(text="ไม่ไปอะ ขี้เกียจ")
+            replyObj = TextSendMessage(text="ไม่ไปอะ")
             line_bot_api.reply_message(rtoken,replyObj)
         else :
             headers = request.headers
