@@ -1,7 +1,7 @@
 import os
 from flask import Flask, request, redirect, url_for, render_template, send_from_directory, flash, jsonify
 from werkzeug.utils import secure_filename
-#import cv2
+import cv2
 import numpy as np
 import json
 import requests
@@ -26,7 +26,7 @@ UPLOAD_FOLDER ='static/uploads/'
 DOWNLOAD_FOLDER = 'static/downloads/'
 ALLOWED_EXTENSIONS = {'jpg', 'png','.jpeg'}
 
-lineaccesstoken = '7WF0SQTg0fDHbfXBxTAStlUnzWDV7ysjViq5fn8m/DIPnGUrFM6kSjP6JUlVizRjB+2CalqZyiOscLJTUYhmvKW3qYTRzpAkQZcv0UhnBKBTLic/hSoYJteog0dvR9W7V8KOv6kLedYHLBqFVbfPywdB04t89/1O/w1cDnyilFU='
+lineaccesstoken = 'NeZy8HA2IZIUOGDrKantBcrEGyYtmtv0bEe/MnIZs+TycgrOwI56tiuUX8W4bZuZGed+WiCihI1mSZQJTJP3FNYPGHxRYxKzQeoQJPNLaIOV0hkkq/ThQ7AhTFPGGbUx/jXY9SMO+Eq8UcbXX2YhkgdB04t89/1O/w1cDnyilFU='
 
 line_bot_api = LineBotApi(lineaccesstoken)
 
@@ -150,36 +150,36 @@ def event_handle(event,json_line):
     if msgType == "text":
         msg = str(event["message"]["text"])
         if msg == "สวัสดี":
-            replyObj = TextSendMessage(text="ดีจ้า")
-            line_bot_api.reply_message(rtoken, replyObj)
-        elif msg =="กินข้าวยังคะ":   
-            replyObj = TextSendMessage(text="ไม่บอก")
-            line_bot_api.reply_message(rtoken, replyObj)
-        elif msg == "ไปเที่ยวกันม้าย" :
-            replyObj = TextSendMessage(text="ขอบายจ้าสู")
-            line_bot_api.reply_message(rtoken, replyObj)
+            replyObj = TextSendMessage(text="หวัดไม่ดีนะครับ")
+            line_bot_api.reply_message(rtoken,replyObj)     
+        elif msg == "กินข้าวไหม":
+            replyObj = TextSendMessage(text="ไม่เอาอะ")
+            line_bot_api.reply_message(rtoken,replyObj)
+        elif msg == "ไปเที่ยวไหม":
+            replyObj = TextSendMessage(text="ไม่ไปอะ ขี้เกียจ")
+            line_bot_api.reply_message(rtoken,replyObj)
         else :
             headers = request.headers
             json_headers = ({k:v for k, v in headers.items()})
             json_headers.update({'Host':'bots.dialogflow.com'})
-            url = "https://dialogflow.cloud.google.com/v1/integrations/line/webhook/75648fc1-08b4-4bb0-9b10-f2d8b07f0122"
+            url = "https://dialogflow.cloud.google.com/v1/integrations/line/webhook/b7d96edc-7dd3-4b86-8b44-b651b5e7872f"
             requests.post(url,data=json_line, headers=json_headers)
     elif msgType == "image":
         try:
             message_content = line_bot_api.get_message_content(event['message']['id'])
             i = Image.open(BytesIO(message_content.content))
-            filmename = event['message']['id'] + '.jpg'
+            filename = event['message']['id'] + '.jpg'
             i.save(UPLOAD_FOLDER + filename)
-            process_file(os.path.join(UPLOAD_FOLDER, filename),filename)
-    
+            process_file(os.path.join(UPLOAD_FOLDER, filename), filename)
+
             url = request.url_root + DOWNLOAD_FOLDER + filename
-        
+            
             line_bot_api.reply_message(
                 rtoken, [
                     TextSendMessage(text='Object detection result:'),
                     ImageSendMessage(url,url)
-                ])
-      
+                ])    
+    
         except:
             message = TextSendMessage(text="เกิดข้อผิดพลาด กรุณาส่งใหม่อีกครั้ง")
             line_bot_api.reply_message(event.reply_token, message)
