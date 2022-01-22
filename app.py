@@ -152,7 +152,7 @@ def event_handle(event,json_line):
         if (msg == "สวัสดี"):
             replyObj = TextSendMessage(text="หวัดไม่ดีนะครับ")
             line_bot_api.reply_message(rtoken,replyObj)     
-        elif (msg == "กินข้าวไห"):
+        elif (msg == "กินข้าวไหม"):
             replyObj = TextSendMessage(text="ไม่เอาอะ")
             line_bot_api.reply_message(rtoken,replyObj)
         elif (msg == "ไปเที่ยวไหม"):
